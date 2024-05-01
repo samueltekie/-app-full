@@ -1,0 +1,6 @@
+"Ehel"/"እህል" - your gateway to online agricultural commerce. Our app connects farmers and consumers, offering a diverse range of products including የጎጃም ጤፍ, በቸና ጤፍ,ስንዴ, ማሽላ, and more. Powered by a robust 30-level API, "Ehel" ensures a seamless experience for all users. Welcome to a world of convenience and quality in agricultural trade.
+
+Developers Name:        ID
+
+1. Samuel Tekie      DBU/044/14
+

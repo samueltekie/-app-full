@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ጆኒያዬ</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #36454F;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .item img {
+    width: 70px;
+    height: 60px;
+    margin-right: 10px;
+    border-radius: 5px;
+  }
+  .cart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1;
+  }
+  .cart-icon {
+    width: 30px;
+    height: auto;
+  }
+  .cart-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+  }
+  .cart-container.active {
+    transform: translateX(0%);
+  }
+  .cart-items {
+    margin-bottom: 20px;
+  }
+  .total {
+    font-weight: bold;
+  }
+  .buttons {
+    text-align: center;
+  }
+  button {
+    background-color: #FF6F61;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #040720;
+  }
+
+</style>
+</head>
+<body>
+<h1 style="text-align:center; color:#Ffd700;">ጆኒያዬ</h1>
+<div class="container">
+  <div class="item">
+    <img src="images/sendea.jpg" alt="ስንዴ">
+    <span>ስንዴ - $70 ብር ኪሎ</span>
+    <button class="decrement">-</button>
+    <span class="quantity" style= "color: white;">--</span>
+<button class="increment">+</button>
+    
+  </div><br>
+  <div class="item">
+    <img src="images/bechoteff.jpg" alt="በቸና ጤፍ">
+    <span>በቸና ጤፍ - $85 ብር ኪሎ</span>
+     <button class="decrement">-</button>
+     <span class="quantity" style= "color: white;">--</span>
+
+<button class="increment">+</button>
+
+  </div><br>
+  <div class="item">
+    <img src="images/yegojjamteff.jpg" alt="የ ጎጃም ጤፍ">
+    <span>የጎጃም ጤፍ - $90 ብር ኪሎ</span>
+     <button class="decrement">-</button>
+     <span class="quantity" style= "color: white;">--</span>
+
+<button class="increment">+</button>
+
+  </div><br>
+  <div class="item">
+    <img src="images/gebes.jpg" alt="ገብስ">
+    <span>ገብስ - $55 ብር ኪሎ</span>
+     <button class="decrement">-</button>
+     <span class="quantity" style= "color: white;">--</span>
+
+<button class="increment">+</button>
+
+  </div><br>
+  <div class="item">
+    <img src="images/aja.jpg" alt="አጃ">
+    <span>አጃ - $90 ብር ኪሎ</span>
+     <button class="decrement">-</button>
+     <span class="quantity" style= "color: white;">--</span>
+
+<button class="increment">+</button>
+
+  </div><br>
+  <div class="item">
+    <img src="images/mashela.jpg" alt="ማሽላ">
+    <span>ማሽላ - $45 ብር ኪሎ</span>
+     <button class="decrement">-</button>
+     <span class="quantity" style= "color: white;">--</span>
+
+<button class="increment">+</button>
+
+  </div>
+
+  <div class="cart" onclick="toggleCart()">
+    <img class="cart-icon" src="cart.jpg" alt="Cart">
+
+    <span id="cartCount" style="color: red;">0</span>
+  </div>
+  
+  <div class="cart-container">
+    <div class="cart-items"></div>
+    <div class="total">Total:  <span id="totalPrice">0</span> ብር</div><br>
+    <div class="buttons">
+      <button id="payNow" style="display: none;" onclick="pay()">አሁን ይክፈሉ</button><br>
+      <button id="reset" style="display: none;" onclick="reset()">ዳግም አስጀምር</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let cartItems = [];
+  
+  function toggleCart() {
+    const cartContainer = document.querySelector('.cart-container');
+    cartContainer.classList.toggle('active');
+    updateCart();
+  }
+  
+  function updateCart() {
+    const cartItemsDiv = document.querySelector('.cart-items');
+    cartItemsDiv.innerHTML = '';
+    let totalPrice = 0;
+    let totalQuantity = 0;
+    cartItems.forEach(item => {
+      const itemDiv = document.createElement('div');
+      itemDiv.textContent = `${item.name} - ${item.price} ብር x ${item.quantity}`;
+      cartItemsDiv.appendChild(itemDiv);
+      totalPrice += item.price * item.quantity;
+      totalQuantity += item.quantity;
+    });
+    document.getElementById('totalPrice').textContent = totalPrice;
+    document.getElementById('cartCount').textContent = totalQuantity;
+    
+    const payNowBtn = document.getElementById('payNow');
+    const resetBtn = document.getElementById('reset');
+    
+    if (cartItems.length > 0) {
+      payNowBtn.style.display = 'block';
+      resetBtn.style.display = 'block';
+    } else {
+      payNowBtn.style.display = 'none';
+      resetBtn.style.display = 'none';
+    }
+  }
+  
+  function addItem(name, price) {
+    const itemIndex = cartItems.findIndex(item => item.name === name);
+    if (itemIndex !== -1) {
+      cartItems[itemIndex].quantity++;
+    } else {
+      cartItems.push({ name, price, quantity: 1 });
+    }
+    updateCart();
+  }
+  
+  function pay() {
+    const ticketNumber = Math.floor(Math.random() * 1000000);
+    alert(`Thanks for choosing us! Your ticket number is: ${ticketNumber}`);
+  }
+  
+  function reset() {
+    cartItems = [];
+    updateCart();
+  }
+  
+  document.querySelectorAll('.increment').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const itemDiv = btn.parentElement;
+      const itemName = itemDiv.querySelector('span').textContent.split(' - ')[0];
+      const itemPrice = parseInt(itemDiv.querySelector('span').textContent.split(' - ')[1].slice(1));
+      addItem(itemName, itemPrice);
+    });
+  });
+  
+  document.querySelectorAll('.decrement').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const itemDiv = btn.parentElement;
+      const itemName = itemDiv.querySelector('span').textContent.split(' - ')[0];
+      const itemIndex = cartItems.findIndex(item => item.name === itemName);
+      if (itemIndex !== -1) {
+        if (cartItems[itemIndex].quantity > 1) {
+          cartItems[itemIndex].quantity--;
+        } else {
+          cartItems.splice(itemIndex, 1);
+        }
+      }
+      updateCart();
+    });
+  });
+</script>
+
+</body>
+</html>
